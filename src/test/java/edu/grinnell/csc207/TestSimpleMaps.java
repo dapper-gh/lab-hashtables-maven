@@ -1,15 +1,12 @@
 package edu.grinnell.csc207;
 
-import edu.grinnell.csc207.util.SimpleMap;
+import edu.grinnell.csc207.util.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
