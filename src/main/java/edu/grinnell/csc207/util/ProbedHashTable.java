@@ -220,8 +220,14 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
    */
   @Override
   public V remove(K key) {
-    // STUB
-    return null;
+    int index = this.find(key);
+    if (this.pairs[index] == null || this.pairs[index] instanceof Boolean) {
+      throw new IndexOutOfBoundsException("No key " + key.toString());
+    } // if
+    @SuppressWarnings("unchecked")
+    Pair<K, V> pair = (Pair<K, V>) this.pairs[index];
+    this.pairs[index] = Boolean.valueOf(false);
+    return pair.value();
   } // remove(K)
 
   /**
@@ -243,7 +249,7 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
     } // if there are too many entries
     // Find out where the key belongs and put the pair there.
     int index = find(key);
-    if (this.pairs[index] != null) {
+    if (this.pairs[index] != null && !(this.pairs[index] instanceof Boolean)) {
       result = ((Pair<K, V>) this.pairs[index]).value();
     } // if
     this.pairs[index] = new Pair<K, V>(key, value);
@@ -324,7 +330,9 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
     pen.print("{");
     int printed = 0; // Number of elements printed
     for (int i = 0; i < this.pairs.length; i++) {
-      @SuppressWarnings("unchecked")
+      if (this.pairs[i] instanceof Boolean) {
+        continue;
+      } // if
       Pair<K, V> pair = (Pair<K, V>) this.pairs[i];
       if (pair != null) {
         pen.print(i + ":" + pair.key() + "(" + pair.key().hashCode() + "):"
@@ -395,6 +403,7 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
   int find(K key) {
     int index = Math.abs(key.hashCode()) % this.pairs.length;
     while (this.pairs[index] != null
+      && !(this.pairs[index] instanceof Boolean)
       && !((Pair<K, V>) this.pairs[index]).key().equals(key)) {
       index = (index + PROBE_OFFSET) % this.pairs.length;
     } // while

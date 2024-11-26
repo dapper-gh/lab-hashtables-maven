@@ -160,7 +160,15 @@ public class HashTableExperiments {
    */
   public static void removeExpt(PrintWriter pen,
       HashTable<String, String> htab) {
-    // STUB
+        htab.reportBasicCalls(true);
+        htab.set("alpha", "alpha");
+        htab.set("beta", "beta");
+        htab.set("bravo", "bravo");
+        htab.set("beta", "max");
+        htab.dump(pen);
+        htab.remove("bravo");
+        htab.dump(pen);
+        pen.println();
   } // removeExpt(PrintWriter, HashTable)
 
 } // class HashTableExperiments
