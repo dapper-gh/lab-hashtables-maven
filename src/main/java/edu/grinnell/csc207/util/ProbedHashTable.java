@@ -381,8 +381,14 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
    *
    * @return the aforementioned index.
    */
+  @SuppressWarnings("unchecked")
   int find(K key) {
-    return Math.abs(key.hashCode()) % this.pairs.length;
+    int index = Math.abs(key.hashCode()) % this.pairs.length;
+    while (this.pairs[index] != null
+      && !((Pair<K, V>) this.pairs[index]).key().equals(key)) {
+      index = (index + PROBE_OFFSET) % this.pairs.length;
+    } // while
+    return index;
   } // find(K)
 
 } // class ProbedHashTable<K, V>
