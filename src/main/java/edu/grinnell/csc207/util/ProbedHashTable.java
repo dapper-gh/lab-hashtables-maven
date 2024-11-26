@@ -361,14 +361,24 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
   void expand() {
     // Figure out the size of the new table.
     int newSize = 2 * this.pairs.length + rand.nextInt(10);
+    if (newSize % PROBE_OFFSET == 0 && PROBE_OFFSET != 1) {
+      newSize++;
+    } // if
     if (REPORT_BASIC_CALLS && (reporter != null)) {
       reporter.report("Expanding to " + newSize + " elements.");
     } // if reporter != null
     // Create a new table of that size.
-    Object[] newPairs = new Object[newSize];
+    Object[] old = this.pairs;
+    this.pairs = new Object[newSize];
     // Move all pairs from the old table to their appropriate
     // location in the new table.
-    // STUB
+    for (int i = 0; i < old.length; i++) {
+      if (old[i] != null) {
+        @SuppressWarnings("unchecked")
+        Pair<K, V> pair = (Pair<K, V>) old[i];
+        this.pairs[this.find(pair.key())] = pair;
+      } // if
+    } // for
     // And update our pairs
   } // expand()
 
