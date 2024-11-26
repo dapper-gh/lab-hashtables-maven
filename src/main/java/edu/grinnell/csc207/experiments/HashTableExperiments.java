@@ -167,6 +167,7 @@ public class HashTableExperiments {
         htab.set("beta", "max");
         htab.dump(pen);
         htab.remove("bravo");
+        pen.println("containsKey(beta): " + htab.containsKey("beta"));
         htab.dump(pen);
         pen.println();
   } // removeExpt(PrintWriter, HashTable)

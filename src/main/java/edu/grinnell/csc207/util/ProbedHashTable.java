@@ -149,13 +149,9 @@ public class ProbedHashTable<K, V> implements HashTable<K, V> {
    */
   @Override
   public boolean containsKey(K key) {
-    // STUB/HACK
-    try {
-      get(key);
-      return true;
-    } catch (Exception e) {
-      return false;
-    } // try/catch
+    int index = this.find(key);
+    return this.pairs[index] != null
+      && !(this.pairs[index] instanceof Boolean);
   } // containsKey(K)
 
   /**
